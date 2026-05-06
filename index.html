@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="classic">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCTL Master | Plateforme d'Entraînement</title>
+    <meta name="description" content="Plateforme d'entraînement intensif pour les examens CCTL">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: 'var(--b50)',100:'var(--b100)',200:'var(--b200)',300:'var(--b300)',
+                            400:'var(--b400)',500:'var(--b500)',600:'var(--b600)',700:'var(--b700)',
+                            800:'var(--b800)',900:'var(--b900)',
+                        }
+                    },
+                    fontFamily: { sans: ['var(--ff)', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        /* === CLASSIC THEME === */
+        [data-theme="classic"]{--b50:#eef2ff;--b100:#e0e7ff;--b200:#c7d2fe;--b300:#a5b4fc;--b400:#818cf8;--b500:#6366f1;--b600:#4f46e5;--b700:#4338ca;--b800:#3730a3;--b900:#312e81;--ff:'Inter';--sb-bg:#0f172a;--sb-border:#1e293b;--sb-text:#94a3b8;--sb-active-bg:rgba(99,102,241,0.15);--sb-active-text:#a5b4fc;--sb-logo:#6366f1;--body-bg:#f8fafc;--card-border:#e2e8f0;}
+        .dark[data-theme="classic"]{--sb-bg:#020617;--sb-border:#0f172a;--body-bg:#0f172a;--card-border:#1e293b;}
+
+        /* === KAWAII THEME === */
+        [data-theme="kawaii"]{--b50:#fdf2f8;--b100:#fce7f3;--b200:#fbcfe8;--b300:#f9a8d4;--b400:#f472b6;--b500:#ec4899;--b600:#db2777;--b700:#be185d;--b800:#9d174d;--b900:#831843;--ff:'Quicksand';--sb-bg:linear-gradient(180deg,#fdf2f8,#fce7f3,#fbcfe8);--sb-border:#f9a8d4;--sb-text:#9d174d;--sb-active-bg:rgba(236,72,153,0.12);--sb-active-text:#db2777;--sb-logo:linear-gradient(135deg,#ec4899,#f9a8d4);--body-bg:#fffbfe;--card-border:#fce7f3;}
+        .dark[data-theme="kawaii"]{--sb-bg:linear-gradient(180deg,#1a0812,#2a0f1e);--sb-border:#3d1028;--sb-text:#f9a8d4;--sb-active-text:#f472b6;--body-bg:#18081a;--card-border:#3d1028;}
+
+        body{font-family:var(--ff),sans-serif;background:var(--body-bg);}
+        .sidebar{background:var(--sb-bg);border-color:var(--sb-border);}
+        .sidebar .nav-text{color:var(--sb-text);}
+        .sidebar .nav-btn:hover{background:var(--sb-active-bg);}
+        .sidebar .nav-btn.active{background:var(--sb-active-bg);}
+        .sidebar .nav-btn.active .nav-text{color:var(--sb-active-text);}
+        .sidebar .nav-btn.active i{color:var(--sb-active-text);}
+        .sidebar .nav-btn i{color:var(--sb-text);}
+
+        ::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:3px;}.dark ::-webkit-scrollbar-thumb{background:#475569;}
+        .page-transition{animation:fadeIn .3s ease-out;}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+        .flip-card{perspective:1000px;}.flip-card-inner{transition:transform .6s cubic-bezier(.4,0,.2,1);transform-style:preserve-3d;}.flip-card.flipped .flip-card-inner{transform:rotateY(180deg);}.flip-card-front,.flip-card-back{backface-visibility:hidden;-webkit-backface-visibility:hidden;}.flip-card-back{transform:rotateY(180deg);}
+
+        /* Kawaii decorations */
+        [data-theme="kawaii"] .kw{display:inline!important;}
+        [data-theme="classic"] .kw{display:none!important;}
+        @keyframes floaty{0%,100%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-6px) rotate(3deg);}}
+        [data-theme="kawaii"] .logo-float{animation:floaty 3s ease-in-out infinite;}
+        [data-theme="kawaii"] .kw-hover:hover{transform:translateY(-3px);box-shadow:0 12px 30px -8px rgba(236,72,153,.2);}
+        @keyframes sparkle{0%,100%{opacity:.3;transform:scale(.8);}50%{opacity:1;transform:scale(1.1);}}
+        .kw-sparkle{animation:sparkle 2s ease-in-out infinite;}
+        .toast-enter{animation:slideInRight .3s ease-out forwards;}
+        @keyframes slideInRight{from{transform:translateX(120%);opacity:0;}to{transform:translateX(0);opacity:1;}}
+        @keyframes pulseRing{0%,100%{transform:scale(.95);opacity:.7;}50%{transform:scale(1.05);opacity:1;}}.pomo-pulse{animation:pulseRing 2s ease-in-out infinite;}
+    </style>
+</head>
+<body class="text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen flex">
+
+    <!-- Sidebar -->
+    <aside class="sidebar w-60 flex flex-col h-screen fixed z-20 border-r transition-all duration-300">
+        <div class="p-5 flex items-center gap-3 border-b" style="border-color:var(--sb-border)">
+            <div class="logo-float w-9 h-9 rounded-xl flex items-center justify-center text-white font-bold text-sm shadow-lg" style="background:var(--sb-logo)">C</div>
+            <h1 class="text-lg font-bold tracking-tight">
+                <span class="nav-text">CCTL</span><span style="color:var(--sb-active-text)">Master</span>
+            </h1>
+            <span class="kw text-pink-400 text-xs ml-auto kw-sparkle">✧</span>
+        </div>
+
+        <nav class="flex-1 p-3 space-y-1 overflow-y-auto">
+            <button onclick="navigate('dashboard')" id="nav-dashboard" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-xl transition-all">
+                <i data-lucide="layout-dashboard" class="w-[18px] h-[18px]"></i><span class="nav-text">Dashboard</span>
+            </button>
+            <button onclick="navigate('cours')" id="nav-cours" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-xl transition-all">
+                <i data-lucide="book-open" class="w-[18px] h-[18px]"></i><span class="nav-text">Cours</span>
+            </button>
+            <button onclick="navigate('flashcards')" id="nav-flashcards" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-xl transition-all">
+                <i data-lucide="layers" class="w-[18px] h-[18px]"></i><span class="nav-text">Fiches</span>
+                <span class="kw text-pink-300 text-[10px] ml-auto">♡</span>
+            </button>
+            <button onclick="navigate('entrainement')" id="nav-entrainement" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-xl transition-all">
+                <i data-lucide="dumbbell" class="w-[18px] h-[18px]"></i><span class="nav-text">Entraînement</span>
+            </button>
+            <button onclick="navigate('examen')" id="nav-examen" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-xl transition-all">
+                <i data-lucide="timer" class="w-[18px] h-[18px]"></i><span class="nav-text">Examen Blanc</span>
+            </button>
+            <div class="pt-2 mt-2" style="border-top:1px solid var(--sb-border)">
+                <button onclick="navigate('pomodoro')" id="nav-pomodoro" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-xl transition-all">
+                    <i data-lucide="alarm-clock" class="w-[18px] h-[18px]"></i><span class="nav-text">Pomodoro</span>
+                </button>
+                <button onclick="navigate('stats')" id="nav-stats" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-xl transition-all">
+                    <i data-lucide="bar-chart-3" class="w-[18px] h-[18px]"></i><span class="nav-text">Statistiques</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Controls -->
+        <div class="p-3 space-y-1" style="border-top:1px solid var(--sb-border)">
+            <button id="theme-style-toggle" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-xl transition-all">
+                <i data-lucide="palette" class="w-[18px] h-[18px]"></i>
+                <span class="nav-text" id="theme-style-label">Mode Kawaii</span>
+                <span class="kw text-pink-300 text-[10px] ml-auto">🌸</span>
+            </button>
+            <button id="theme-toggle" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-xl transition-all">
+                <i data-lucide="moon" class="w-[18px] h-[18px] dark:hidden"></i>
+                <i data-lucide="sun" class="w-[18px] h-[18px] hidden dark:block"></i>
+                <span class="nav-text"><span class="dark:hidden">Mode Sombre</span><span class="hidden dark:block">Mode Clair</span></span>
+            </button>
+            <button onclick="resetProgress()" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-xl transition-all">
+                <i data-lucide="rotate-ccw" class="w-[18px] h-[18px]"></i><span class="nav-text text-xs">Réinitialiser</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 ml-60 min-h-screen flex flex-col relative overflow-y-auto">
+        <header class="h-14 border-b bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl sticky top-0 z-10 flex items-center justify-between px-8" style="border-color:var(--card-border)">
+            <h2 id="page-title" class="text-base font-semibold text-slate-800 dark:text-slate-100"></h2>
+            <div class="flex items-center gap-3">
+                <div id="streak-badge" class="hidden items-center gap-1.5 bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 px-3 py-1 rounded-full text-xs font-bold">
+                    <i data-lucide="flame" class="w-3.5 h-3.5"></i><span id="streak-count">0</span> jours
+                </div>
+                <div class="h-8 w-8 rounded-full bg-brand-100 dark:bg-brand-900 flex items-center justify-center text-brand-600 dark:text-brand-300 font-bold text-sm border-2 border-white dark:border-slate-800 shadow-sm">S</div>
+            </div>
+        </header>
+        <div id="app-content" class="p-6 md:p-8 max-w-7xl mx-auto w-full"></div>
+    </main>
+
+    <div id="toast-container" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2"></div>
+
+    <script src="data_courses.js"></script>
+    <script src="data_quizzes.js"></script>
+    <script src="data_exams.js"></script>
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+    <script src="app_views1.js"></script>
+    <script src="app_views2.js"></script>
+</body>
+</html>
